@@ -8,6 +8,7 @@ TARGET="${BOOTSTRAP_TARGET:=".tools/bootstrap"}"
 VIRTUALENV="${BOOTSTRAP_VIRTUALENV:="virtualenv"}"
 DEFAULT_REQUIREMENTS=( 'clickable>=0.1.1' 'invoke' )
 REQUIREMENTS=( ${BOOTSTRAP_REQUIREMENTS:="${DEFAULT_REQUIREMENTS[@]}"} )
+STDIN=${BOOTSTRAP_STDIN:=0}
 
 echo -e "** bootstraping in ${TARGET}"
 
@@ -36,7 +37,8 @@ echo -e "** perform packages installation"
 
 echo -e "** create bootstrap virtualenv"
 if [ -e "${TARGET}" ]; then
-    read -p "${TARGET} already exists; do you want to remove it? [y/N]: " -r -n 1 accept
+    read -u "${STDIN}" -t 1 -n 10000 discard
+    read -u "${STDIN}" -p "${TARGET} already exists; do you want to remove it? [y/N]: " -r -n 1 accept
     echo
     if [ "${accept,,}" != "y" ]; then
 	echo "** ${TARGET} removal refused"
