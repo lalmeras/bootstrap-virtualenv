@@ -49,7 +49,7 @@ if [ -e "${TARGET}" ]; then
 fi
 
 mkdir -p "$( dirname "${TARGET}" )"
-venv_command=( "$VIRTUALENV" "${TARGET}" )
+venv_command=( "$VIRTUALENV" --python=python2 "${TARGET}" )
 if [ -n "${BOOTSTRAP_DEBUG}" ]; then
     echo "[debug] virtualenv command: ${venv_command[@]}"
 fi
